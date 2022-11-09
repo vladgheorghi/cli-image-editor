@@ -1,0 +1,99 @@
+Gheorghiu Doru-Vlad - 312CA
+
+README file
+
+Homework #3 for Computers Programming & Programming Languages (C language)
+
+
+					IMAGE EDITOR
+					
+- Description
+	
+	Command interface program for basic image manipulation. You can load
+	either Grayscale or RBG images and make a bunch of modifications on
+	them. You can make selections on portions of the image and either
+	rotate, crop or even apply 4 effects on them (you can apply effects
+	on the image only if it is RGB). The effects are either EDGE, SHARPEN,
+	BLUR or GAUSSIAN BLUR. You can save the images after modifying them.
+
+- Implementation
+
+	I used a switch case decisional structure for the interface. Because
+	cases can't be strings, I used macros defined with typedef enums for
+	each command case and throughout the whole program for a more readable
+	code. As a command can either be valid, invalid, or can even have valid
+	and invalid parameters, I implemented a function (command_input) which
+	sorts out each parameter and command and returns a macro used to select
+	a case in switch. I used a structure to store image data and because
+	images can get very big, I used dynamic allocation for storing them.
+	The program works with double data types, for more exact values when
+	applying a kernel as a filter and rounds up each pixel before saving the
+	image.
+	
+- How to run
+
+    -> make build run
+
+- Commands
+	
+    -> LOAD
+	Loads an image that has a PBM format. A PBM format image is a file
+	with an image type between P1-6 (is grayscale/RGB and ascii/binary),
+	a width and height, an optional max value of a pixel and a matrix
+	that is the actual image.
+	
+	LOAD <filename>
+	ex: LOAD image.ppm
+	
+    -> SELECT
+    	Selects a portion of the image in the [x1,x2), [y1,y2) interval. The
+    	values can't be negative and they can't pass the width and height of
+    	the image. If a selection is invalid the last valid selection remains.
+    	When an image is loaded, the selection is the whole image. x1 < x2
+    	is optional, the program sorts the coordinates out.
+    	
+    	SELECT <x1> <y1> <x2> <y2>
+    	ex: SELECT 0 0 100 100
+    	
+    -> SELECT ALL
+    	Selects the whole image. 
+    	
+    -> ROTATE
+    	Rotates an image by an angle in the set {0, +-90, +-180, +-270, +-360}.
+    	It can either rotate the whole image, or a selection of it that has to
+    	be squared. Any angle that is not in the set is invalid.
+    	
+    	ROTATE <angle>
+    	ex: ROTATE 90
+    	
+    -> CROP
+    	Crops the image to the made selection. The rest of the image is lost.
+    	
+    -> APPLY
+    	Applies one of the four effects available on a coloured image. The
+    	effects can be either EDGE, SHARPEN, BLUR or GAUSSIAN BLUR. The effects
+    	are applied using image kernels.
+    	
+    	APPLY <effect>
+    	ex: APPLY BLUR
+    	
+    -> SAVE
+    	Saves the current image. To save the image in ascii you have to specify.
+    	If not, the program will save the image in binary.
+    	
+    	SAVE <name> [ascii]
+    	ex: SAVE image1 ascii
+    	ex: SAVE image2
+    
+    -> EXIT
+    	Frees the memory allocated for the program and exits.
+    	
+- Extra details
+
+    -> I used triple pointers to store the pixels of the image. The matrix array
+    has either 1 matrix for Grayscale images or 3 matrices for RGB images.
+    
+    -> I used typedef enums for a legible code and easier calls.
+    
+    -> I used multiple header and source files for each command.
+	
